@@ -32,7 +32,8 @@
         "lint": "virmator lint fix",
         "publish": "virmator publish npm run test:all",
         "test": "virmator test web",
-        "test:all": "npm run compile && runstorm --names spelling,format,docs,deps,lint,test \"npm run test:spelling\" \"npm run test:format\" \"npm run test:docs\" \"npm run test:deps\" \"npm run test:lint\" \"npm test\"",
+        "test:all": "npm run compile && runstorm --names spelling,format,docs,deps,lint,test \"npm run test:spelling\" \"npm run test:format\" \"npm run test:docs\" \"npm run test:deps\" \"npm run test:lint\" \"npm run test:coverage\"",
+        "test:coverage": "virmator test web coverage",
         "test:deps": "virmator deps check",
         "test:docs": "virmator docs check",
         "test:format": "virmator format check",
@@ -40,6 +41,7 @@
         "test:spelling": "virmator spellcheck"
     },
     "dependencies": {
+        "@augment-vir/assert": "^31.64.0",
         "@augment-vir/common": "^31.65.0",
         "date-vir": "^8.1.1",
         "observavir": "^2.3.1"

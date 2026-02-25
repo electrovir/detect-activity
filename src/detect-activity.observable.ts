@@ -1,5 +1,6 @@
 import {type FullDate, getNowInUserTimezone} from 'date-vir';
 import {Observable} from 'observavir';
+import {eventsToListenTo} from './events.js';
 
 const globalDocument = globalThis.document as typeof globalThis.document | undefined;
 
@@ -12,6 +13,7 @@ export class DetectedActivityObservable extends Observable<FullDate> {
         super({
             defaultValue: getNowInUserTimezone(),
         });
+        /* node:coverage ignore next 3 */
         if (!globalDocument) {
             return;
         }
@@ -30,18 +32,3 @@ export class DetectedActivityObservable extends Observable<FullDate> {
         });
     }
 }
-
-const eventsToListenTo = [
-    'click',
-    'pointerup',
-    'contextmenu',
-    'touchend',
-    'pointerdown',
-    'keydown',
-    'touchstart',
-    'wheel',
-    'scroll',
-    'keypress',
-    'keyup',
-    'focus',
-];

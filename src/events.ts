@@ -1,0 +1,15 @@
+export const eventsToListenTo = [
+    'click',
+    'contextmenu',
+    'focus',
+    'keydown',
+    'keypress',
+    'keyup',
+    'mousemove',
+    'pointerdown',
+    'pointerup',
+    'scroll',
+    'touchend',
+    'touchstart',
+    'wheel',
+];
