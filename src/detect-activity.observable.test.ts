@@ -1,7 +1,7 @@
 import {assert, waitUntil} from '@augment-vir/assert';
 import {wait} from '@augment-vir/common';
 import {describe, it} from '@augment-vir/test';
-import {assertValidFullDate, isDateAfter} from 'date-vir';
+import {isDateAfter, isValidFullDate} from 'date-vir';
 import {DetectedActivityObservable} from './detect-activity.observable.js';
 import {eventsToListenTo} from './events.js';
 
@@ -17,9 +17,8 @@ describe('DetectedActivityObservable', () => {
 
     it('has a FullDate value upon construction', () => {
         const observable = new DetectedActivityObservable();
-        const value = observable.value;
         try {
-            assertValidFullDate(value);
+            assert.isTrue(isValidFullDate(observable.value));
         } finally {
             observable.destroy();
         }
@@ -30,7 +29,9 @@ describe('DetectedActivityObservable', () => {
             const observable = new DetectedActivityObservable();
             const valueBefore = observable.value;
 
-            await wait({seconds: 1});
+            await wait({
+                seconds: 1,
+            });
 
             globalThis.dispatchEvent(new Event(eventName));
             try {
@@ -119,7 +120,9 @@ describe('DetectedActivityObservable', () => {
 
         globalThis.dispatchEvent(new Event('click'));
 
-        await wait({seconds: 1});
+        await wait({
+            seconds: 1,
+        });
 
         try {
             assert.strictEquals(callCount, 0);

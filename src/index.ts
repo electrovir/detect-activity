@@ -31,7 +31,9 @@ export function listenToActivity({
 }) {
     const debounced = new Debounce(
         DebounceStyle.FirstThenWait,
-        debounce || {seconds: 10},
+        debounce || {
+            seconds: 10,
+        },
         async () => {
             await listener(getLastActivityAt());
         },

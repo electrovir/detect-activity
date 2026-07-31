@@ -1,19 +1,24 @@
 import {assert, waitUntil} from '@augment-vir/assert';
 import {wait} from '@augment-vir/common';
 import {describe, it} from '@augment-vir/test';
-import {assertValidFullDate, getNowInUtcTimezone, isDateAfter, type FullDate} from 'date-vir';
+import {
+    assertValidFullDate,
+    getNowInUtcTimezone,
+    isDateAfter,
+    isValidFullDate,
+    type FullDate,
+} from 'date-vir';
 import {getLastActivityAt, listenToActivity} from './index.js';
 
 describe('index.ts', () => {
     it('can be imported', async () => {
-        await import('./index.js');
+        assert.isDefined(await import('./index.js'));
     });
 });
 
 describe(getLastActivityAt.name, () => {
     it('returns a FullDate', () => {
-        const result = getLastActivityAt();
-        assertValidFullDate(result);
+        assert.isTrue(isValidFullDate(getLastActivityAt()));
     });
 
     it('updates after activity events', async () => {
@@ -41,10 +46,14 @@ describe(listenToActivity.name, () => {
             listener(lastActivityAt) {
                 receivedDate = lastActivityAt;
             },
-            debounce: {milliseconds: 1},
+            debounce: {
+                milliseconds: 1,
+            },
         });
 
-        await wait({seconds: 1});
+        await wait({
+            seconds: 1,
+        });
         globalThis.dispatchEvent(new Event('click'));
 
         try {
@@ -69,7 +78,9 @@ describe(listenToActivity.name, () => {
             listener() {
                 callCount++;
             },
-            debounce: {milliseconds: 1},
+            debounce: {
+                milliseconds: 1,
+            },
         });
 
         await waitUntil.isAbove(0, () => callCount);
@@ -85,7 +96,9 @@ describe(listenToActivity.name, () => {
             listener() {
                 callCount++;
             },
-            debounce: {milliseconds: 1},
+            debounce: {
+                milliseconds: 1,
+            },
         });
 
         try {
@@ -102,7 +115,9 @@ describe(listenToActivity.name, () => {
             listener() {
                 callCount++;
             },
-            debounce: {milliseconds: 1},
+            debounce: {
+                milliseconds: 1,
+            },
         });
 
         try {
@@ -119,17 +134,23 @@ describe(listenToActivity.name, () => {
             listener() {
                 callCount++;
             },
-            debounce: {milliseconds: 1},
+            debounce: {
+                milliseconds: 1,
+            },
         });
 
         removeListener();
 
         globalThis.dispatchEvent(new Event('click'));
         globalThis.dispatchEvent(new Event('click'));
-        await wait({seconds: 1});
+        await wait({
+            seconds: 1,
+        });
         globalThis.dispatchEvent(new Event('click'));
         globalThis.dispatchEvent(new Event('click'));
-        await wait({seconds: 1});
+        await wait({
+            seconds: 1,
+        });
 
         assert.strictEquals(callCount, 0);
     });
@@ -154,7 +175,9 @@ describe(listenToActivity.name, () => {
             globalThis.dispatchEvent(new Event('mousemove'));
         }
 
-        await wait({seconds: 2});
+        await wait({
+            seconds: 2,
+        });
 
         try {
             assert.isBelow(callCount, 10);
@@ -170,7 +193,9 @@ describe(listenToActivity.name, () => {
             listener(lastActivityAt) {
                 receivedDate = lastActivityAt;
             },
-            debounce: {milliseconds: 1},
+            debounce: {
+                milliseconds: 1,
+            },
         });
 
         globalThis.dispatchEvent(new Event('keydown'));
@@ -212,10 +237,14 @@ describe(listenToActivity.name, () => {
 
         const removeListener = listenToActivity({
             async listener() {
-                await wait({milliseconds: 100});
+                await wait({
+                    milliseconds: 100,
+                });
                 completed = true;
             },
-            debounce: {milliseconds: 1},
+            debounce: {
+                milliseconds: 1,
+            },
         });
 
         globalThis.dispatchEvent(new Event('click'));
@@ -235,14 +264,18 @@ describe(listenToActivity.name, () => {
             listener() {
                 callCount1++;
             },
-            debounce: {milliseconds: 1},
+            debounce: {
+                milliseconds: 1,
+            },
         });
 
         const removeListener2 = listenToActivity({
             listener() {
                 callCount2++;
             },
-            debounce: {milliseconds: 1},
+            debounce: {
+                milliseconds: 1,
+            },
         });
 
         globalThis.dispatchEvent(new Event('click'));
@@ -264,20 +297,26 @@ describe(listenToActivity.name, () => {
             listener() {
                 callCount1++;
             },
-            debounce: {milliseconds: 1},
+            debounce: {
+                milliseconds: 1,
+            },
         });
 
         const removeListener2 = listenToActivity({
             listener() {
                 callCount2++;
             },
-            debounce: {milliseconds: 1},
+            debounce: {
+                milliseconds: 1,
+            },
         });
 
         removeListener1();
 
         globalThis.dispatchEvent(new Event('click'));
-        await wait({seconds: 1});
+        await wait({
+            seconds: 1,
+        });
 
         try {
             assert.strictEquals(callCount1, 0);
